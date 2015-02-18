@@ -1,5 +1,5 @@
-ssid = "see_dum"
-pwd = "0863219053"
+ssid = "you-ssid"
+pwd = "you-password"
 FILE = "http.lua"
 
 function file_exists(name)
