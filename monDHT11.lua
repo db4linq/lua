@@ -30,7 +30,7 @@ function split(s, delimiter)
     return result;
 end
 
-function urlencode(payload)
+function urldecode(payload)
     result = {};
     list=split(payload,"\r\n")
     --print(list[1])
@@ -79,7 +79,7 @@ srv=net.createServer(net.TCP) srv:listen(80,function(conn)
     conn:on("receive",function(conn,payload)
      	--print(payload) -- for debugging only
      	--generates HTML web site
-          list=urlencode(payload)
+          list=urldecode(payload)
                  
           if (list[2]=="index.html") then
                index(conn)
