@@ -88,7 +88,6 @@ srv=net.createServer(net.TCP) srv:listen(80,function(conn)
           else
                notfound(conn)
           end      
-     end)
-     
-     conn:on("sent",function(conn) conn:close() end)
+    end)    
+    conn:on("sent",function(conn) conn:close() end)
 end)

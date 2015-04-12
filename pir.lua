@@ -23,9 +23,9 @@ end
 open()
 gpio.mode(4,gpio.INPUT,gpio.FLOAT)
 tmr.alarm(0, 1000, 1, function() -- Set alarm to one second
-     if gpio.read(4)==1 then status="ALARM" else status="CLEAR" end
+    if gpio.read(4)==1 then status="ALARM" else status="CLEAR" end
     if status ~= oldstatus then sendalarm (SensorID,status) end
-     oldstatus = status
+    oldstatus = status
 end)
 
 

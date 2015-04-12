@@ -1,7 +1,7 @@
 dht11 = require("dht11")
 Temperature = 0
 Humidity = 0
-key = "you-key"
+key = "BW2QUW86FJ96DGIG"
 
 PIN = 4 --  data pin, GPIO2
 --load DHT11 module and read sensor
