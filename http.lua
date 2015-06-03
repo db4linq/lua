@@ -37,7 +37,6 @@ end
 srv=net.createServer(net.TCP)
 srv:listen(80,function(conn)
     conn:on("receive",function(conn,payload)
-      --print(payload)
       list=urlencode(payload)
       if (list[2]=="write") then
         local pin = tonumber(list[3])

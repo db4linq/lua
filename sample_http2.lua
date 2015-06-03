@@ -1,5 +1,6 @@
-pin1 = 4
-pin2 = 5
+pin1 = 5
+pin2 = 6
+pin3 = 7
 gpio.mode(pin1,gpio.OUTPUT)
 gpio.mode(pin2,gpio.OUTPUT)
 function split(s, delimiter)
@@ -22,23 +23,27 @@ end
 
 function index(conn)
  
-    gpio3 = 'ON'
-    gpio4 = 'ON'
+    gpio5 = 'ON'
+    gpio6 = 'ON'
+    gpio7 = 'ON'
     if (gpio.read(pin1) == 1) then
-       gpio3 = 'OFF'
+       gpio5 = 'OFF'
     end
     if (gpio.read(pin2) == 1) then
-       gpio4 = 'OFF'
+       gpio6 = 'OFF'
     end
+    if (gpio.read(pin3) == 1) then
+       gpio7 = 'OFF'
+    end    
     conn:send('HTTP/1.1 200 OK\r\nConnection: keep-alive\r\nCache-Control: private, no-store\r\n\r\n\
      <!DOCTYPE HTML><html><head><style>input[type=submit] {font-size:large;width:8em;height:4em;}</style>\
      <meta content="text/html;charset=utf-8"><title>ESP8266</title>\
      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">\
      <body bgcolor="#ffe4c4"><h2>ESP8266-01</h2><hr>\
      <form action="/digital/'..pin1..'/'..gpio.read(pin1)..'" method="POST">\
-     <input type="submit" value="GPIO3 '..gpio3..'"/></form><br><br>\
+     <input type="submit" value="GPIO5 '..gpio5..'"/></form><br>\
      <form action="/digital/'..pin2..'/'..gpio.read(pin2)..'" method="POST">\
-     <input type="submit" value="GPIO4 '..gpio4..'" /></form>\
+     <input type="submit" value="GPIO6 '..gpio6..'" /></form><br>\
      </body></html>')
 end
 function notfound(conn)

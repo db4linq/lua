@@ -13,6 +13,8 @@ _G[modname] = M
 --------------------------------------------------------------------------------
 -- DS18B20 dq pin
 local pin = nil
+-- DS18B20 default pin
+local defaultPin = 9
 --------------------------------------------------------------------------------
 -- Local used modules
 --------------------------------------------------------------------------------
@@ -32,9 +34,31 @@ setfenv(1,M)
 C = 0
 F = 1
 K = 2
-function read(pin)
-  result = nil
+function setup(dq)
+  pin = dq
+  if(pin == nil) then
+    pin = defaultPin
+  end
   ow.setup(pin)
+end
+
+function addrs()
+  setup(pin)
+  tbl = {}
+  ow.reset_search(pin)
+  repeat
+    addr = ow.search(pin)
+    if(addr ~= nil) then
+      table.insert(tbl, addr)
+    end
+    tmr.wdclr()
+  until (addr == nil)
+  ow.reset_search(pin)
+  return tbl
+end
+function readNumber(addr, unit)
+  result = nil
+  setup(pin)
   flag = false
   if(addr == nil) then
     ow.reset_search(pin)
@@ -92,6 +116,15 @@ function read(pin)
   -- print("CRC is not valid!")
   end
   return result
+end
+
+function read(addr, unit)
+  t = readNumber(addr, unit)
+  if (t == nil) then
+    return nil
+  else
+    return t
+  end
 end
 
 -- Return module table

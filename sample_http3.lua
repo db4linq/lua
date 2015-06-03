@@ -1,25 +1,15 @@
-function split(s, delimiter)
-    result = {};
-    for match in (s..delimiter):gmatch("(.-)"..delimiter) do
-        table.insert(result, match);
-    end
-    return result;
-end
-function urldecode(payload)
-    result = {};
-    list=split(payload,"\r\n")
-    list=split(list[1]," ")
-    list=split(list[2],"\/")
-    table.insert(result, list[1]);
-    table.insert(result, list[2]);
-    table.insert(result, list[3]);
-    return result;
-end
+gpio.mode(5,gpio.OUTPUT)
+gpio.mode(6,gpio.OUTPUT)
+gpio.mode(7,gpio.OUTPUT)
 
+gpio.write(5, 0)
+gpio.write(6, 0)
+gpio.write(7, 0)
+--dofile('ssd1306_ip.lua')
 function index(conn)
-    gpio5 = 'ON'
-    gpio6 = 'ON'
-    gpio7 = 'ON'
+    local gpio5 = 'ON'
+    local gpio6 = 'ON'
+    local gpio7 = 'ON'
     if (gpio.read(5) == 1) then
        gpio5 = 'OFF'
     end
@@ -51,23 +41,29 @@ srv=net.createServer(net.TCP)
 srv:listen(80,function(conn)
     conn:on("receive",function(conn,payload)
       print("Http Request..\r\n")
-      --print (payload)
-      list=urldecode(payload) 
-      if ((list[2]=="") or (list[2]=="index.html")) then 
+      -- print (payload)
+      -- "GET /digital/5/1 HTTP"
+      _, _, method, action, pin, state = string.find(payload, "([A-Z]+) /(.+)/([0-9]+)/([0-1]+) HTTP")
+      --print (action)
+      --print (pin)
+      --print (state)
+      --list=urldecode(payload) 
+      if ((action==nil) or (action=="index.html")) then 
           index(conn)   
-      elseif (list[2]=="digital") then
-          local pin = tonumber(list[3]) 
-          local status = tonumber(list[4]) 
+      elseif (action=="digital") then
+          local pin = tonumber(pin) 
+          local status = tonumber(state) 
           if (status == 1) then
                gpio.write(pin, 0)   
           else
                gpio.write(pin, 1)
           end  
-          --print(gpio.read(pin))        
-          index(conn)
+          --print(gpio.read(pin))   
+          index(conn) 
       else
           notfound(conn)   
       end      
       conn:close() 
+      --display()
     end)
 end)
