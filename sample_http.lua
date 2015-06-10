@@ -26,6 +26,7 @@ function index(conn)
      <h2>Page Index</h2><hr>\
      </body></html>')
 end
+
 function about(conn)
     conn:send('HTTP/1.1 200 OK\r\nConnection: keep-alive\r\nCache-Control: private, no-store\r\n\r\n\
      <!DOCTYPE HTML><html><head>\
@@ -35,6 +36,7 @@ function about(conn)
      <h2>Page About</h2><hr>\
      </body></html>')
 end
+
 function notfound(conn)
      conn:send('HTTP/1.1 404 Not Found\r\nConnection: keep-alive\r\nCache-Control: private, no-store\r\n\r\n\
           <!DOCTYPE HTML>\
@@ -44,11 +46,14 @@ function notfound(conn)
 end
 
 srv=net.createServer(net.TCP)
+
+
 srv:listen(80,function(conn)
     conn:on("receive",function(conn,payload)
       print("Http Request..\r\n")
-      --print (payload)
+      print (payload)
       list=urldecode(payload) 
+      
       if ((list[2]=="") or (list[2]=="index.html")) then 
           index(conn)     
       elseif (list[2]=="about.html") then 

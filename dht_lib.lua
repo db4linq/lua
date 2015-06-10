@@ -1,4 +1,4 @@
-local moduleName = 'dht'
+local moduleName = 'dht_lib'
 local M = {}
 _G[moduleName] = M
 local humidity

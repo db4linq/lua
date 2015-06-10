@@ -1,4 +1,4 @@
-PIN=5
+PIN=0
 STATUS = 7
 humi=0
 temp=0
@@ -23,14 +23,15 @@ m:on("offline",
 m:on("message", function(conn, topic, data) 
   print(topic .. ":" ) 
   if data ~= nil then
-    print(data)
+    print('Message: '..data) 
+    print('*****************************')
   end
 end)
 function connect()
      -- iot.eclipse.org
      -- broker.mqttdashboard.com
      -- subscribe topic with qos = 0
-     m:connect("192.168.43.94", 1883, 0, 
+     m:connect("iot.eclipse.org", 1883, 0, 
           function(conn) 
             gpio.write(STATUS, 1)
             print("connected") 

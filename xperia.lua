@@ -1,5 +1,5 @@
-ssid = 'see_dum'
-pwd = '0863219053'
+ssid = 'Xperia_Z2'
+pwd = '1234567890'
 print("set up wifi mode")
 wifi.setmode(wifi.STATION) 
 wifi.sta.config(ssid, pwd)
@@ -16,8 +16,9 @@ tmr.alarm(0, 1000, 1, function()
                tmr.alarm(0, 2000, 1, function() 
                     tmr.stop(0)
                     print("WIFI connected...")
-                    dofile("tcp_client_temp.lc")
-                    -- dofile("sample_http3.lua")
+                    --dofile('sample_http.lua')
+                    --dofile("iothink_relay.lc")
+                    --dofile("sample_http3.lua")
                     --dofile("iothink_weather.lc")
                end) 
           else 

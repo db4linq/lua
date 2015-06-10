@@ -1,8 +1,7 @@
-pin1 = 5
 pin2 = 6
 pin3 = 7
-gpio.mode(pin1,gpio.OUTPUT)
 gpio.mode(pin2,gpio.OUTPUT)
+gpio.mode(pin3,gpio.OUTPUT)
 function split(s, delimiter)
     result = {};
     for match in (s..delimiter):gmatch("(.-)"..delimiter) do
@@ -22,13 +21,8 @@ function urldecode(payload)
 end
 
 function index(conn)
- 
-    gpio5 = 'ON'
     gpio6 = 'ON'
     gpio7 = 'ON'
-    if (gpio.read(pin1) == 1) then
-       gpio5 = 'OFF'
-    end
     if (gpio.read(pin2) == 1) then
        gpio6 = 'OFF'
     end
@@ -40,10 +34,10 @@ function index(conn)
      <meta content="text/html;charset=utf-8"><title>ESP8266</title>\
      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">\
      <body bgcolor="#ffe4c4"><h2>ESP8266-01</h2><hr>\
-     <form action="/digital/'..pin1..'/'..gpio.read(pin1)..'" method="POST">\
-     <input type="submit" value="GPIO5 '..gpio5..'"/></form><br>\
      <form action="/digital/'..pin2..'/'..gpio.read(pin2)..'" method="POST">\
-     <input type="submit" value="GPIO6 '..gpio6..'" /></form><br>\
+     <input type="submit" value="GPIO5 '..gpio6..'"/></form><br>\
+     <form action="/digital/'..pin3..'/'..gpio.read(pin3)..'" method="POST">\
+     <input type="submit" value="GPIO6 '..gpio7..'" /></form><br>\
      </body></html>')
 end
 function notfound(conn)
